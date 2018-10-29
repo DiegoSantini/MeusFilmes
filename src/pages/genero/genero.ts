@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Genero } from '../../model/genero';
+import { MovieProvider } from '../../providers/movie/movie';
 
 /**
  * Generated class for the GeneroPage page.
@@ -13,23 +14,31 @@ import { Genero } from '../../model/genero';
 @Component({
   selector: 'page-genero',
   templateUrl: 'genero.html',
+  providers: [
+    MovieProvider
+  ]
 })
 export class GeneroPage {
-      public generos;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    var l1 = {nome:'Terror'}
-    var l2 = {nome:'Misterio'};
-    var l3 = {nome:'Fantasia'};
-    var l4 = {nome:'Animação'};
-    var l5 = {nome:'Ação'};
-    var l6 = {nome:'Comédia'};
-    var l7 = {nome:'Aventura'};
-    var l8 = {nome:'Ficção científica'};
-    var l9 = {nome:'Suspense'};
-    this.generos = [l1, l2, l3, l4, l5, l6, l7, l8, l9];
+  public generos = new Array<any>();
+
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private movieProvider: MovieProvider) {
+
   }
 
-  irParaGenero(generos:Genero):void{
-    this.navCtrl.push(GeneroPage, {GeneroSelecionado: generos});
+  ionViewDidLoad() {
+    this.movieProvider.getGenres().subscribe(
+      data => {
+        const response = (data as any);
+        const objeto_retorno = JSON.parse(response._body);
+        this.generos = objeto_retorno.genres;
+        console.log(this.generos);
+        console.log(objeto_retorno);
+      }, error => {
+        console.log(error);
+      }
+    )
   }
 }

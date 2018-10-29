@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Filme } from '../../model/filmes';
-import { DestinoPage } from '../destino/destino';
+import { MovieProvider } from '../../providers/movie/movie';
 
 
 /**
@@ -15,25 +14,28 @@ import { DestinoPage } from '../destino/destino';
 @Component({
   selector: 'page-filme',
   templateUrl: 'filme.html',
+  providers: [
+    MovieProvider
+  ]
 })
 export class FilmePage {
-  public filme:Filme[];
+  public lista_filmes = new Array<any>();
   
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
-    var l1 = {titulo:'A Freira', genero:'Terror,Misterio,Suspense,Sobrenatural'};
-    var l2 = {titulo:'Harry Potter e a Pedra Filosofal', genero:' Fantasia, Aventura, Família'};
-    var l3 = {titulo:'O Senhor dos Anéis',genero:'Animação, Fantasia'};
-    var l4 = {titulo:'Os Vingadores- The Avengers', genero:' Ação, Aventura, Ficção científica'};
-    var l5 = {titulo:'Deadpool 2', genero:' Ação, Comédia , Aventura'};
-    var l6 = {titulo:'Pantera Negra', genero:' Ação, Aventura, Ficção científica, Fantasia'};
-    var l7 = {titulo:'Os incriveis 2', genero:' Animação,Aventura,Familia'};
-    var l8 = {titulo:'Velozes e Furiosos 8', genero:' Ação, Suspense'};
-    var l9 = {titulo:'Harry Potter e as Reliquias da Morte', genero:'Fantasia, Aventura'};
-    this.filme = [l1, l2, l3, l4, l5, l6, l7, l8, l9];
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams, 
+     private movieProvider: MovieProvider) {
   }
 
-  irParaDestino(filme:Filme):void{
-   this.navCtrl.push(DestinoPage, {filmeSelecionado: filme});
-  }
+  filme() {
+    this.movieProvider.getMovie().subscribe(
+      data => {
+      const response = (data as any);
+      const objeto_retorno = JSON.parse(response._body);
+      this.lista_filmes = objeto_retorno.results;
+      console.log(objeto_retorno);
+      }, error => {
+      console.log(error);
+      }
+      )
+      }
 }

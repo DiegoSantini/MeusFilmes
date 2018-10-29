@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Filme } from '../../model/filmes';
+import { MovieProvider } from '../../providers/movie/movie';
 
 /**
  * Generated class for the DestinoPage page.
@@ -15,14 +15,24 @@ import { Filme } from '../../model/filmes';
   templateUrl: 'destino.html',
 })
 export class DestinoPage {
-  public filme:Filme;
+  public filme = new Array<any>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.filme = this.navParams.get("filmeSelecionado");
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private movieProvider: MovieProvider) {
+    
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DestinoPage');
-  }
+    this.movieProvider.getMovie().subscribe(
+      data => {
+      const response = (data as any);
+      const objeto_retorno = JSON.parse(response._body);
+      this.filme = objeto_retorno.results;
+      console.log(objeto_retorno);
+      }, error => {
+      console.log(error);
+      }
+      )
+ }
 
 }
