@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { CadastrarPage } from '../cadastrar/cadastrar';
+import { HomePage } from '../home/home';
 import { GeneroPage } from '../genero/genero';
 import { LancamentosPage } from '../lancamentos/lancamentos';
 import{PopularidadePage} from '../popularidade/popularidade'
@@ -11,7 +11,7 @@ import{PopularidadePage} from '../popularidade/popularidade'
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  tab1Root = CadastrarPage;
+  tab1Root = HomePage;
   tab2Root = GeneroPage;
   tab3Root = LancamentosPage;
   tab4Root = PopularidadePage;

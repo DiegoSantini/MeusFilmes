@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Genero } from '../../model/genero';
 import { MovieProvider } from '../../providers/movie/movie';
 
 /**

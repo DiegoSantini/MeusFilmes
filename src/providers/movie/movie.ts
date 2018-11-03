@@ -25,10 +25,16 @@ export class MovieProvider {
         return this.http.get(this.baseApiPath + '/genre/movie/list?api_key='
           + this.getApiKey());
       }
-       getMovie(){
-        return this.http.get(this.baseApiPath + '/movie/{movie_id}?api_key='
+      
+      getList() {
+        return this.http.get(this.baseApiPath + '/list?api_key='
         + this.getApiKey());
-       }
+      }
+      getMovie(){
+        return this.http.get(this.baseApiPath + '/list/{list_id}/add_item?api_key='
+          + this.getApiKey());
+      }
+
     getApiKey(): string{
     return 'fdcd7dd095ab0470607a7032fff1f232';
     }

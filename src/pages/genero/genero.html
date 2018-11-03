@@ -15,7 +15,6 @@
 
 
 <ion-content>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
     <ion-card *ngFor="let genero of generos">
       <ion-card-header>
         <h2>{{genero.name}}</h2>
